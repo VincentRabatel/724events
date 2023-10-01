@@ -12,13 +12,14 @@ const Slider = () => {
 
   // Sorted list of data.focus by month
   const byDateDesc = data?.focus.sort((evtA, evtB) =>
-    new Date(evtA.date) < new Date(evtB.date) ? -1 : 1
+    // Corrected: invert this so slides are displayed from the oldest to the newest
+    new Date(evtA.date) > new Date(evtB.date) ? -1 : 1
   );
 
-  // This function call the next time after a timeout
+  // This function call the next slide after a timeout
   const nextCard = () => {
-    console.log(`index == ${index} compared to length == ${byDateDesc.length}`);
     setTimeout(
+      // Corrected: add - 1 after byDateDesc.length to correctly compare with index
       () => setIndex(index < byDateDesc.length - 1 ? index + 1 : 0),
       5000
     );
@@ -31,7 +32,6 @@ const Slider = () => {
   });
 
   return (
-    // Slideshow
     <div className="SlideCardList">
       {/* For each slide */}
       {byDateDesc?.map((event, idx) => (
