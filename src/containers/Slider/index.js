@@ -62,7 +62,8 @@ const Slider = () => {
                   key={`${event.id}`}
                   type="radio"
                   name="radio-button"
-                  checked={idx === radioIdx}
+                  // Corrected: compare with the current index so it knows if its checked
+                  checked={radioIdx === index}
                 />
               ))}
             </div>
