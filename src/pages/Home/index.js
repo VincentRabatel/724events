@@ -13,15 +13,26 @@ import Modal from "../../containers/Modal";
 import { useData } from "../../contexts/DataContext";
 
 const Page = () => {
-  const {last} = useData()
+  const { data } = useData();
+
+  // Sorted array of data.events by month
+  const sortedEvents = data?.events.sort((evtA, evtB) =>
+    new Date(evtA.date) > new Date(evtB.date) ? -1 : 1
+  );
+
+  // Get the first element of the sorted event array
+  const last = sortedEvents?.[0];
+
   return <>
     <header>
       <Menu />
     </header>
+
     <main>
       <section className="SliderContainer">
         <Slider />
       </section>
+
       <section className="ServicesContainer">
         <h2 className="Title">Nos services</h2>
         <p>Nous organisons des événements sur mesure partout dans le monde</p>
@@ -51,10 +62,12 @@ const Page = () => {
           </ServiceCard>
         </div>
       </section>
+
       <section className="EventsContainer">
         <h2 className="Title">Nos réalisations</h2>
         <EventList />
       </section>
+
       <section className="PeoplesContainer">
         <h2 className="Title">Notre équipe</h2>
         <p>Une équipe d’experts dédiés à l’ogranisation de vos événements</p>
@@ -91,6 +104,7 @@ const Page = () => {
           />
         </div>
       </section>
+
       <div className="FormContainer" id="contact">
         <h2 className="Title">Contact</h2>
         <Modal
@@ -113,6 +127,7 @@ const Page = () => {
         </Modal>
       </div>
     </main>
+
     <footer className="row">
       <div className="col presta">
         <h3>Notre derniére prestation</h3>
@@ -124,6 +139,7 @@ const Page = () => {
           label="boom"
         />
       </div>
+
       <div className="col contact">
         <h3>Contactez-nous</h3>
         <address>45 avenue de la République, 75000 Paris</address>
@@ -144,6 +160,7 @@ const Page = () => {
           </a>
         </div>
       </div>
+
       <div className="col description">
         <Logo size="large" />
         <p>
