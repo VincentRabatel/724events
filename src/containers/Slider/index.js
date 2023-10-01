@@ -53,23 +53,25 @@ const Slider = () => {
               </div>
             </div>
           </div>
-
-          {/* Pagination */}
-          <div className="SlideCard__paginationContainer">
-            <div className="SlideCard__pagination">
-              {byDateDesc.map((_, radioIdx) => (
-                <input
-                  key={`${event.id}`}
-                  type="radio"
-                  name="radio-button"
-                  // Corrected: compare with the current index so it knows if its checked
-                  checked={radioIdx === index}
-                />
-              ))}
-            </div>
-          </div>
         </>
       ))}
+
+      {/* Pagination */}
+      <div className="SlideCard__paginationContainer">
+        <div className="SlideCard__pagination">
+          {byDateDesc?.map((_, radioIdx) => (
+            <input
+              key={crypto.randomUUID()}
+              type="radio"
+              name="radio-button"
+              // Corrected: compare with the current index so it knows if its checked
+              checked={radioIdx === index}
+              readOnly
+            />
+          ))}          
+        </div>
+      </div>
+
     </div>
   );
 };
