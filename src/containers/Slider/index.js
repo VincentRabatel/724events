@@ -33,10 +33,8 @@ const Slider = () => {
 
   return (
     <div className="SlideCardList">
-      {/* For each slide */}
+      {/* Slide */}
       {byDateDesc?.map((event, idx) => (
-        <>
-          {/* Slide */}
           <div
             key={event.title}
             className={`SlideCard SlideCard--${
@@ -53,7 +51,6 @@ const Slider = () => {
               </div>
             </div>
           </div>
-        </>
       ))}
 
       {/* Pagination */}
