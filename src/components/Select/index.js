@@ -18,9 +18,9 @@ const Select = ({
 
   // This function is called when clicking on a new category to filter
   const changeValue = (newValue) => {
-    onChange();
-    setValue(newValue); console.log(newValue)
-
+    // Corrected: pass the newValue to spread it to the EventList (this function is a prop)
+    onChange(newValue);
+    setValue(newValue);
     // Corrected: this state should be true or false, not "newValue"
     setCollapsed(
       () => {

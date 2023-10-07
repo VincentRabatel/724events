@@ -13,25 +13,43 @@ const EventList = () => {
   const { data, error } = useData();
   const [type, setType] = useState();
   const [currentPage, setCurrentPage] = useState(1);
+
   const filteredEvents = (
     (!type
       ? data?.events
       : data?.events) || []
+
+  // Corrected: add a condition, the event must have the same type as the current active filter
   ).filter((event, index) => {
-    if (
-      (currentPage - 1) * PER_PAGE <= index &&
-      PER_PAGE * currentPage > index
-    ) {
-      return true;
+    // If there is still room on the page
+    if ((currentPage - 1) * PER_PAGE <= index && PER_PAGE * currentPage > index) {
+
+      // If there is an active category filter
+      if (type) {
+        // If the event match the active category filter
+        if(event.type === type) {
+          return true;
+        }
+      } else {
+        return true
+      }
     }
     return false;
   });
+
+
   const changeType = (evtType) => {
     setCurrentPage(1);
     setType(evtType);
   };
-  const pageNumber = Math.floor((filteredEvents?.length || 0) / PER_PAGE) + 1;
-  const typeList = new Set(data?.events.map((event) => event.type));
+
+  // Number of pages needed to show all events
+  const pageNumber = Math.floor((filteredEvents?.length || 0) / PER_PAGE) + 1; // console.log("Number of pages needed to show all events", pageNumber)
+
+  // The full list of events' types from data
+  const typeList = new Set(data?.events.map((event) => event.type)); // console.log("A full list of events' types", typeList)
+
+
   return (
     <>
       {error && <div>An error occured</div>}
@@ -39,11 +57,17 @@ const EventList = () => {
         "loading"
       ) : (
         <>
+          {/* Title */}
           <h3 className="SelectTitle">Catégories</h3>
+
+          {/* Filter selection */}
           <Select
             selection={Array.from(typeList)}
-            onChange={(value) => (value ? changeType(value) : changeType(null))}
+            onChange={(value) => (
+              value ? changeType(value) : changeType(null))}
           />
+
+          {/* Event cards */}
           <div id="events" className="ListContainer">
             {filteredEvents.map((event) => (
               <Modal key={event.id} Content={<ModalEvent event={event} />}>
@@ -59,6 +83,8 @@ const EventList = () => {
               </Modal>
             ))}
           </div>
+
+          {/* Pagination */}
           <div className="Pagination">
             {[...Array(pageNumber || 0)].map((_, n) => (
               // eslint-disable-next-line react/no-array-index-key
@@ -67,6 +93,7 @@ const EventList = () => {
               </a>
             ))}
           </div>
+          
         </>
       )}
     </>
