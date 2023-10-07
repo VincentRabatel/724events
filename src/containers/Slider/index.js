@@ -54,6 +54,7 @@ const Slider = () => {
       ))}
 
       {/* Pagination */}
+      {/* Corrected: move the pagination out of the slides .map() */}
       <div className="SlideCard__paginationContainer">
         <div className="SlideCard__pagination">
           {byDateDesc?.map((_, radioIdx) => (

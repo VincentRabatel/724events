@@ -15,11 +15,23 @@ const Select = ({
 }) => {
   const [value, setValue] = useState();
   const [collapsed, setCollapsed] = useState(true);
+
+  // This function is called when clicking on a new category to filter
   const changeValue = (newValue) => {
     onChange();
-    setValue(newValue);
-    setCollapsed(newValue);
+    setValue(newValue); console.log(newValue)
+
+    // Corrected: this state should be true or false, not "newValue"
+    setCollapsed(
+      () => {
+        if (collapsed === true) {return false}
+        return true
+      }
+    ); 
   };
+  
+
+
   return (
     <div className={`SelectContainer ${type}`} data-testid="select-testid">
       {label && <div className="label">{label}</div>}
@@ -28,15 +40,20 @@ const Select = ({
           <li className={collapsed ? "SelectTitle--show" : "SelectTitle--hide"}>
             {value || (!titleEmpty && "Toutes")}
           </li>
+
+          {/* If the Select is open */}
           {!collapsed && (
             <>
               {!titleEmpty && (
+                // Change the value to null if click on "Toutes"
                 <li onClick={() => changeValue(null)}>
                   <input defaultChecked={!value} name="selected" type="radio" />{" "}
                   Toutes
                 </li>
               )}
+
               {selection.map((s) => (
+                // Change the value the selected category
                 <li key={s} onClick={() => changeValue(s)}>
                   <input
                     defaultChecked={value === s}
@@ -49,7 +66,9 @@ const Select = ({
             </>
           )}
         </ul>
+
         <input type="hidden" value={value || ""} name={name} />
+
         <button
           type="button"
           data-testid="collapse-button-testid"
@@ -99,3 +118,19 @@ Select.defaultProps = {
 }
 
 export default Select;
+
+
+/* Drafts
+
+    // Corrected: this state should be true or false, not "newValue"
+    setCollapsed(
+      () => {
+        // eslint-disable-next-line no-unused-expressions, no-unneeded-ternary
+        collapsed ? false : true;
+
+        if (collapsed === true) {return false}
+        return true
+      }
+    ); 
+
+*/
