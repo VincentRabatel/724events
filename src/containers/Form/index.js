@@ -12,10 +12,14 @@ const Form = ({ onSuccess, onError }) => {
     async (evt) => {
       evt.preventDefault();
       setSending(true);
+
       // We try to call mockContactApi
       try {
         await mockContactApi();
         setSending(false);
+
+        // Corrected: call onSuccess to open the modal
+        onSuccess();
       } catch (err) {
         setSending(false);
         onError(err);
@@ -23,6 +27,7 @@ const Form = ({ onSuccess, onError }) => {
     },
     [onSuccess, onError]
   );
+
   return (
     <form onSubmit={sendContact}>
       <div className="row">
