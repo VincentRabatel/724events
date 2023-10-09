@@ -131,13 +131,19 @@ const Page = () => {
     <footer className="row">
       <div className="col presta">
         <h3>Notre derniére prestation</h3>
-        <EventCard
-          imageSrc={last?.cover}
-          title={last?.title}
-          date={new Date(last?.date)}
-          small
-          label="boom"
-        />
+
+        {/* Corrected: add a condition to manage the case when data is still loading */}
+        {!data ? 
+          <h1>Loading...</h1> 
+          :
+          <EventCard
+            imageSrc={last.cover}
+            title={last.title}
+            date={new Date(last.date)}
+            small
+            label="boom"
+          />
+        }
       </div>
 
       <div className="col contact">
