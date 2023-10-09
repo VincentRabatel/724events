@@ -59,7 +59,8 @@ const Slider = () => {
         <div className="SlideCard__pagination">
           {byDateDesc?.map((_, radioIdx) => (
             <input
-              key={crypto.randomUUID()}
+              // todo: find another way to create an unique key here, 'cause the test returns an error 
+              // key={crypto.randomUUID()}
               type="radio"
               name="radio-button"
               // Corrected: compare with the current index so it knows if its checked
