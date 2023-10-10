@@ -18,6 +18,11 @@ const Slider = () => {
 
   // This function call the next slide after a timeout
   const nextCard = () => {
+    // Corrected: add a condition to be sure to have sorted data before going to next slide
+    if (!byDateDesc) {
+      console.log("No data yet ?")
+      return;
+    }
     setTimeout(
       // Corrected: add - 1 after byDateDesc.length to correctly compare with index
       () => setIndex(index < byDateDesc.length - 1 ? index + 1 : 0),
@@ -61,6 +66,9 @@ const Slider = () => {
             <input
               // todo: find another way to create an unique key here, 'cause the test returns an error 
               // key={crypto.randomUUID()}
+              
+              // eslint-disable-next-line react/no-array-index-key
+              key={radioIdx + 10}
               type="radio"
               name="radio-button"
               // Corrected: compare with the current index so it knows if its checked
