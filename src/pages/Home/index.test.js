@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import Home from "./index";
 
 describe("When Form is created", () => {
@@ -21,7 +21,10 @@ describe("When Form is created", () => {
         })
       );
       await screen.findByText("En cours");
-      await screen.findByText("Message envoyé !");
+
+      // Corrected: add time for mockContactApi response and button title loading time
+      const TIMEOUT = 2000;
+      await waitFor(() => screen.getByText("Message envoyé !"), { timeout: TIMEOUT });
     });
   });
 
